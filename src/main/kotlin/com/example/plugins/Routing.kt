@@ -13,8 +13,9 @@ fun Application.configureRouting() {
         }
     }
     routing {
-        get("/") {
+        get("/bla") {
             call.respondText("Hello World!")
         }
+        post("/") {  }
     }
 }
