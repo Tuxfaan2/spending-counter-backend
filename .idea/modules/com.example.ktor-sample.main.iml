@@ -42,6 +42,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Gradle: org.jetbrains.exposed:exposed-dao:0.53.0" level="project" />
     <orderEntry type="library" name="Gradle: org.jetbrains.exposed:exposed-jdbc:0.53.0" level="project" />
     <orderEntry type="library" name="Gradle: org.jetbrains.exposed:exposed-core:0.53.0" level="project" />
     <orderEntry type="library" name="Gradle: io.ktor:ktor-server-host-common-jvm:3.0.0-rc-1" level="project" />
