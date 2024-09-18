@@ -1,5 +1,6 @@
 package com.example.repo
 
+import com.example.repo.expenses.Expense
 import com.example.repo.users.User
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.dao.IntEntity
@@ -10,27 +11,45 @@ import org.jetbrains.exposed.sql.Transaction
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 
 object UserTable : IntIdTable("users") {
-    val user_name = varchar("name", 50)
-    val user_password = varchar("description", 255)
+    val userName = varchar("user_name", 50)
+    val userPassword = varchar("user_password", 255)
 }
+
 class UserDAO(id: EntityID<Int>) : IntEntity(id) {
     companion object : IntEntityClass<UserDAO>(UserTable)
-    var user_name by UserTable.user_name
-    var user_password by UserTable.user_password
-    var user_id by UserTable.id
+
+    var userId by UserTable.id
+    var userName by UserTable.userName
+    var userPassword by UserTable.userPassword
 }
 
 fun daoToModel(dao: UserDAO) = User(
-    dao.user_name,
-    dao.user_password,
-    dao.user_id.value,
+    dao.userId.value,
+    dao.userName,
+    dao.userPassword,
 )
 
-object ExpenseEntryTable : IntIdTable("") {
-
-    val spending_description = varchar("description", 255);
-    val spending_amount
+object ExpenseTable : IntIdTable("expenses") {
+    var expenseUserId = integer("expense_user_id")
+    var expenseDescription = varchar("expense_description", 255)
+    var expenseAmount = decimal("expense_amount", 10, 2)
 }
+
+class ExpenseDAO(id: EntityID<Int>) : IntEntity(id) {
+    companion object : IntEntityClass<ExpenseDAO>(ExpenseTable)
+
+    var expenseId by ExpenseTable.id
+    var expenseUserId by ExpenseTable.expenseUserId
+    var expenseDescription by ExpenseTable.expenseDescription
+    var expenseAmount by ExpenseTable.expenseAmount
+}
+
+fun daoToModel(dao: ExpenseDAO) = Expense(
+    dao.expenseId.value,
+    dao.expenseUserId,
+    dao.expenseDescription,
+    dao.expenseAmount,
+)
 
 suspend fun <T> suspendTransaction(block: Transaction.() -> T): T =
     newSuspendedTransaction(Dispatchers.IO, statement = block)
