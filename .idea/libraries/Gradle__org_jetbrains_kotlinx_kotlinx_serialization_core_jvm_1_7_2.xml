@@ -5,6 +5,8 @@
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-serialization-core-jvm/1.7.2/a8259bd311fb07aae6d757a980b662fb24551a4b/kotlinx-serialization-core-jvm-1.7.2.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-serialization-core-jvm/1.7.2/fd6605e831b570c4d19f2b5a197fdb50a9004217/kotlinx-serialization-core-jvm-1.7.2-sources.jar!/" />
+    </SOURCES>
   </library>
 </component>

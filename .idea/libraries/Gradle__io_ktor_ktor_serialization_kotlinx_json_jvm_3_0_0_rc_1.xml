@@ -5,6 +5,8 @@
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-serialization-kotlinx-json-jvm/3.0.0-rc-1/643d0d5a68aef065cf483195e1b3bb85fd7a3ceb/ktor-serialization-kotlinx-json-jvm-3.0.0-rc-1.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-serialization-kotlinx-json-jvm/3.0.0-rc-1/1286fa36dd275858b1aec000f888cd7bef39110/ktor-serialization-kotlinx-json-jvm-3.0.0-rc-1-sources.jar!/" />
+    </SOURCES>
   </library>
 </component>

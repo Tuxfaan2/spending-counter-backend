@@ -1,13 +1,14 @@
 package com.example.plugins
 
+import com.example.repo.users.PostgresUserRepository
+import com.example.repo.users.User
 import io.ktor.http.*
+import io.ktor.serialization.JsonConvertException
 import io.ktor.server.application.*
 import io.ktor.server.plugins.statuspages.*
+import io.ktor.server.request.receive
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import kotlinx.coroutines.flow.asFlow
-import org.jetbrains.exposed.sql.Database
-import kotlin.coroutines.createCoroutine
 
 fun Application.configureRouting() {
     install(StatusPages) {
@@ -16,8 +17,51 @@ fun Application.configureRouting() {
         }
     }
     routing {
-        get("/bla") {
-            call.respond("Hello World!")
+        route("/users") {
+            val userRepo = PostgresUserRepository()
+            get {
+                val users = userRepo.getAllUsers()
+                call.respond(users)
+            }
+
+            get("/byId/{id}") {
+                val id = call.parameters["id"]?.toInt()
+                if (id == null) {
+                    call.respond(HttpStatusCode.BadRequest)
+                    return@get
+                }
+                val user = userRepo.getUserById(id)
+                if (user == null) {
+                    call.respond(HttpStatusCode.NotFound)
+                    return@get
+                }
+                call.respond(user)
+            }
+
+            post {
+                try {
+                    val user = call.receive<User>()
+                    userRepo.addUser(user)
+                    call.respond(HttpStatusCode.NoContent)
+                } catch (ex: IllegalStateException) {
+                    call.respond(HttpStatusCode.BadRequest)
+                } catch (ex: JsonConvertException) {
+                    call.respond(HttpStatusCode.BadRequest)
+                }
+            }
+
+            delete("/{id}") {
+                val name = call.parameters["name"]
+                if (name == null) {
+                    call.respond(HttpStatusCode.BadRequest)
+                    return@delete
+                }
+                if (userRepo.removeUser(name)) {
+                    call.respond(HttpStatusCode.NoContent)
+                } else {
+                    call.respond(HttpStatusCode.NotFound)
+                }
+            }
         }
     }
 }

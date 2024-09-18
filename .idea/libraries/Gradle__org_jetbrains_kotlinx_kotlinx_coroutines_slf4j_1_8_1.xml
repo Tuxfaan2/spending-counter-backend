@@ -5,6 +5,8 @@
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-coroutines-slf4j/1.8.1/a64ea6ebcb63208589fd45a00a1f47985ecd34c3/kotlinx-coroutines-slf4j-1.8.1.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-coroutines-slf4j/1.8.1/4f8e5031f1c848527e7622d455dd9e3a929d001a/kotlinx-coroutines-slf4j-1.8.1-sources.jar!/" />
+    </SOURCES>
   </library>
 </component>

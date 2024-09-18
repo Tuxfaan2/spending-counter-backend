@@ -5,6 +5,8 @@
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-server-config-yaml-jvm/3.0.0-rc-1/7875ba59a1d15b13da74e664986e4fbad99868a/ktor-server-config-yaml-jvm-3.0.0-rc-1.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-server-config-yaml-jvm/3.0.0-rc-1/b47da3252898099a9ee21475d92d8ec993bb2937/ktor-server-config-yaml-jvm-3.0.0-rc-1-sources.jar!/" />
+    </SOURCES>
   </library>
 </component>

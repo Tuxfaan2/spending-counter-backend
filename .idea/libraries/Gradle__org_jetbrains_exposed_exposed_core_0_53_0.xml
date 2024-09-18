@@ -5,6 +5,8 @@
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.exposed/exposed-core/0.53.0/8fc30bdb3a0ee0d3dd390a7c64af5604787b58cb/exposed-core-0.53.0.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.exposed/exposed-core/0.53.0/738610ffd489c9749346a9103210cad3e3a94ec0/exposed-core-0.53.0-sources.jar!/" />
+    </SOURCES>
   </library>
 </component>
