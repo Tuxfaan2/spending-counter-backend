@@ -1,5 +1,6 @@
 package com.example.plugins
 
+import com.example.repo.expenses.Expense
 import com.example.repo.expenses.PostgresExpenseRepository
 import com.example.repo.users.PostgresUserRepository
 import com.example.repo.users.User
@@ -21,7 +22,7 @@ fun Application.configureRouting() {
         route("/users") {
             val userRepo = PostgresUserRepository()
             get {
-                val users = userRepo.getAllItems()
+                val users = userRepo.getAll()
                 call.respond(users)
             }
 
@@ -31,7 +32,7 @@ fun Application.configureRouting() {
                     call.respond(HttpStatusCode.BadRequest)
                     return@get
                 }
-                val user = userRepo.getItemById(id)
+                val user = userRepo.getById(id)
                 if (user == null) {
                     call.respond(HttpStatusCode.NotFound)
                     return@get
@@ -42,7 +43,7 @@ fun Application.configureRouting() {
             post {
                 try {
                     val user = call.receive<User>()
-                    userRepo.addItem(user)
+                    userRepo.add(user)
                     call.respond(HttpStatusCode.NoContent)
                 } catch (ex: IllegalStateException) {
                     call.respond(HttpStatusCode.BadRequest)
@@ -57,7 +58,7 @@ fun Application.configureRouting() {
                     call.respond(HttpStatusCode.BadRequest)
                     return@delete
                 }
-                if (userRepo.removeItem(id.toInt())) {
+                if (userRepo.remove(id.toInt())) {
                     call.respond(HttpStatusCode.NoContent)
                 } else {
                     call.respond(HttpStatusCode.NotFound)
@@ -67,7 +68,47 @@ fun Application.configureRouting() {
         route("/expenses") {
             val expenseRepo = PostgresExpenseRepository()
             get {
-                val expenses = expenseRepo.getAllItems()
+                val expenses = expenseRepo.getAll()
+                call.respond(expenses)
+            }
+            get("/byId/{id}") {
+                val id = call.parameters["id"]?.toInt()
+                if (id == null) {
+                    call.respond(HttpStatusCode.BadRequest)
+                    return@get
+                }
+                val expense = expenseRepo.getById(id)
+                if (expense == null) {
+                    call.respond(HttpStatusCode.NotFound)
+                    return@get
+                }
+                call.respond(expense)
+            }
+
+            post {
+                try {
+                    val expense = call.receive<Expense>()
+                    expenseRepo.add(expense)
+                    call.respond(HttpStatusCode.NoContent)
+                } catch (ex: IllegalStateException) {
+                    call.respond(HttpStatusCode.BadRequest)
+                } catch (ex: JsonConvertException) {
+                    call.respond(HttpStatusCode.BadRequest)
+                }
+            }
+
+            delete("/{id}") {
+                val id = call.parameters["id"]?.toInt()
+                if (id == null) {
+                    call.respond(HttpStatusCode.BadRequest)
+                    return@delete
+                }
+                if (expenseRepo.remove(id.toInt())) {
+                    call.respond(HttpStatusCode.NoContent)
+                    return@delete
+                } else {
+                    call.respond(HttpStatusCode.NotFound)
+                }
             }
         }
     }
