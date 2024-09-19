@@ -1,5 +1,6 @@
 package com.example.plugins
 
+import com.example.repo.expenses.PostgresExpenseRepository
 import com.example.repo.users.PostgresUserRepository
 import com.example.repo.users.User
 import io.ktor.http.*
@@ -13,14 +14,14 @@ import io.ktor.server.routing.*
 fun Application.configureRouting() {
     install(StatusPages) {
         exception<Throwable> { call, cause ->
-            call.respondText(text = "500: $cause" , status = HttpStatusCode.InternalServerError)
+            call.respondText(text = "500: $cause", status = HttpStatusCode.InternalServerError)
         }
     }
     routing {
         route("/users") {
             val userRepo = PostgresUserRepository()
             get {
-                val users = userRepo.getAllUsers()
+                val users = userRepo.getAllItems()
                 call.respond(users)
             }
 
@@ -30,7 +31,7 @@ fun Application.configureRouting() {
                     call.respond(HttpStatusCode.BadRequest)
                     return@get
                 }
-                val user = userRepo.getUserById(id)
+                val user = userRepo.getItemById(id)
                 if (user == null) {
                     call.respond(HttpStatusCode.NotFound)
                     return@get
@@ -41,7 +42,7 @@ fun Application.configureRouting() {
             post {
                 try {
                     val user = call.receive<User>()
-                    userRepo.addUser(user)
+                    userRepo.addItem(user)
                     call.respond(HttpStatusCode.NoContent)
                 } catch (ex: IllegalStateException) {
                     call.respond(HttpStatusCode.BadRequest)
@@ -51,16 +52,22 @@ fun Application.configureRouting() {
             }
 
             delete("/{id}") {
-                val name = call.parameters["name"]
-                if (name == null) {
+                val id = call.parameters["id"]
+                if (id == null) {
                     call.respond(HttpStatusCode.BadRequest)
                     return@delete
                 }
-                if (userRepo.removeUser(name)) {
+                if (userRepo.removeItem(id.toInt())) {
                     call.respond(HttpStatusCode.NoContent)
                 } else {
                     call.respond(HttpStatusCode.NotFound)
                 }
+            }
+        }
+        route("/expenses") {
+            val expenseRepo = PostgresExpenseRepository()
+            get {
+                val expenses = expenseRepo.getAllItems()
             }
         }
     }
