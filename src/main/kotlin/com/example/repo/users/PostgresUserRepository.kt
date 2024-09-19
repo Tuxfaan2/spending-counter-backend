@@ -5,7 +5,6 @@ import com.example.repo.UserTable
 import com.example.repo.daoToModel
 import com.example.repo.suspendTransaction
 import io.ktor.server.plugins.*
-import org.jetbrains.exposed.sql.deleteWhere
 
 class PostgresUserRepository : UserRepository {
 
@@ -26,10 +25,10 @@ class PostgresUserRepository : UserRepository {
         }
     }
 
-    override suspend fun removeUser(userId: Int): Boolean = suspendTransaction {
-        val rowsDeleted = UserTable.deleteWhere {
-            UserTable.userName == userId
-        }
-        rowsDeleted == 1
+    override suspend fun removeUser(id: Int): Boolean = suspendTransaction {
+        val tempUser = UserDAO.Companion
+            .findById(id) ?: return@suspendTransaction false
+        tempUser.delete()
+        true
     }
 }
