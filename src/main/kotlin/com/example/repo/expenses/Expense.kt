@@ -1,5 +1,11 @@
 package com.example.repo.expenses
 
-import java.math.BigDecimal
+import kotlinx.serialization.Serializable
 
-data class Expense(val id: Int, val userId: Int, val description: String, val amount: BigDecimal)
+@Serializable
+data class Expense(
+    val id: Int,
+    val userId: Int,
+    val description: String,
+    val amount: Double
+)

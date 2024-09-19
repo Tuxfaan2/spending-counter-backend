@@ -32,7 +32,7 @@ fun daoToModel(dao: UserDAO) = User(
 object ExpenseTable : IntIdTable("expenses") {
     var expenseUserId = integer("expense_user_id")
     var expenseDescription = varchar("expense_description", 255)
-    var expenseAmount = decimal("expense_amount", 10, 2)
+    var expenseAmount = double("expense_amount")
 }
 
 class ExpenseDAO(id: EntityID<Int>) : IntEntity(id) {
