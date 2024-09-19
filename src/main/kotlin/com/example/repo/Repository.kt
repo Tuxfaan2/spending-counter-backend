@@ -1,8 +1,8 @@
 package com.example.repo
 
 interface Repository<T> {
-    suspend fun getAllItems(): List<T>
-    suspend fun getItemById(id: Int): T?
-    suspend fun addItem(item: T)
-    suspend fun removeItem(id: Int): Boolean
+    suspend fun getAllI(): List<T>
+    suspend fun getById(id: Int): T?
+    suspend fun add(item: T)
+    suspend fun remove(id: Int): Boolean
 }
